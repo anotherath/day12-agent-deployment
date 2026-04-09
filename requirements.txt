@@ -1,0 +1,10 @@
+langchain
+langchain-openai
+langchain-core
+langgraph
+python-dotenv
+requests
+typing-extensions
+fastapi
+uvicorn
+pydantic
