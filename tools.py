@@ -82,11 +82,12 @@ Dưới đây là nội dung chính sách ưu đãi mới nhất (gồm website,
 ---
 {final_context}
 ---
-Hãy tìm và tóm tắt thông tin ưu đãi liên quan chặt chẽ đến điều kiện của khách hàng: "{condition}".
+Hãy tìm và tóm tắt TẤT CẢ thông tin ưu đãi liên quan chặt chẽ đến TOÀN BỘ các điều kiện của khách hàng: "{condition}".
+Đặc biệt lưu ý KHÔNG BỎ SÓT các từ khóa về: nghề nghiệp (Quân đội, Công an, CBNV), chương trình đổi xe (thu cũ đổi mới, xe xăng sang điện), nơi ở (cư dân Vinhomes). 
 Lưu ý quan trọng: 
-1. Nếu ưu đãi quy định giảm theo tỷ lệ % (Ví dụ 4% hay 1.5%), hãy GHI RÕ số % đó và nhắc hệ thống AI tự nhân % này với giá xe để ra số tiền VNĐ cuối cùng. 
+1. Nếu ưu đãi quy định giảm theo tỷ lệ % (Ví dụ 4% hay 1.5% hay 5%), hãy GHI RÕ số % đó và nhắc hệ thống AI tự nhân % này với giá xe để ra số tiền VNĐ. 
 2. Nếu là một khoản tiền cố định (VD: 100 triệu), ghi rõ số đó.
-3. Không bỏ sót bất kỳ đặc quyền kèm theo nào (như miễn phí sạc, bảo hiểm, v.v...).
+3. Chú ý các điều kiện KHÔNG ÁP DỤNG ĐỒNG THỜI (ví dụ: Công an/Quân đội không áp dụng cùng Vinclub). Hãy phân tích rõ ràng cái nào được cộng dồn, cái nào không.
 Hãy tóm tắt và format thật gọn gàng, rõ ý nhất để trợ lý chatbot đọc hiểu.
 """
     
