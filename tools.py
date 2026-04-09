@@ -88,6 +88,7 @@ Lưu ý quan trọng:
 1. Nếu ưu đãi quy định giảm theo tỷ lệ % (Ví dụ 4% hay 1.5% hay 5%), hãy GHI RÕ số % đó và nhắc hệ thống AI tự nhân % này với giá xe để ra số tiền VNĐ. 
 2. Nếu là một khoản tiền cố định (VD: 100 triệu), ghi rõ số đó.
 3. Chú ý các điều kiện KHÔNG ÁP DỤNG ĐỒNG THỜI (ví dụ: Công an/Quân đội không áp dụng cùng Vinclub). Hãy phân tích rõ ràng cái nào được cộng dồn, cái nào không.
+4. ĐỐI VỚI CÁC ĐIỀU KIỆN ẨN: Nếu ưu đãi liên quan đến từ khóa mà đòi hỏi thêm điều kiện phụ (VD: CBNV Vingroup phải sở hữu xe xăng thì mới được giảm thêm), HÃY CẢNH BÁO rõ ràng để AI bên ngoài hiểu rằng "chỉ được tính % nếu khách chứng minh họ có xe xăng".
 Hãy tóm tắt và format thật gọn gàng, rõ ý nhất để trợ lý chatbot đọc hiểu.
 """
     
@@ -103,7 +104,8 @@ def calculate_rolling_price(base_price: int, discounts: str, location: str) -> s
     Công cụ tính toán (Rule-based engine) để xuất báo giá lăn bánh dự toán xe VinFast.
     Tham số:
     - base_price: Giá xe khởi điểm (số nguyên VNĐ).
-    - discounts: Chuỗi danh sách mã giảm giá và số tiền trừ thẳng, định dạng 'mã:số_tiền' cách nhau bằng phẩy (VD: 'VINHOMES:30000000,THUCU:15000000'). Nhập 'none' nếu không có.
+    - discounts: Chuỗi danh sách mã giảm giá và số tiền trừ thẳng (hoặc tỷ lệ %), định dạng 'mã:số_lượng' cách nhau bằng phẩy. 
+                 VD: 'VINHOMES:4%,THUCU:15000000,VINCLUB:1.5%'. Nhập 'none' nếu không có.
     - location: Thành phố ra biển (VD: 'Hà Nội', 'HCM', 'Nghệ An', 'Hải Phòng'). Ảnh hưởng phí cấp biển tĩnh.
     """
     total_disc = 0
@@ -112,12 +114,27 @@ def calculate_rolling_price(base_price: int, discounts: str, location: str) -> s
     if discounts.lower() != 'none' and discounts.strip():
         try:
             for item in discounts.split(','):
-                code, amount_str = item.split(':')
-                amount = int(amount_str.strip())
+                if ':' not in item: continue
+                code, amount_str = item.split(':', 1)
+                code = code.strip()
+                amount_str = amount_str.strip().lower()
+                
+                amount = 0
+                if '%' in amount_str:
+                    # Tính theo phần trăm
+                    pct = float(re.sub(r'[^\d.]', '', amount_str))
+                    amount = int(base_price * (pct / 100.0))
+                    disc_details += f"  - Khuyến mãi {code} ({pct}%): -{amount:,} VNĐ\n"
+                else:
+                    # Tính theo số tiền cố định. Bỏ mọi ký tự không phải số
+                    val = re.sub(r'[^\d]', '', amount_str)
+                    if val:
+                        amount = int(val)
+                        disc_details += f"  - Khuyến mãi {code}: -{amount:,} VNĐ\n"
+                
                 total_disc += amount
-                disc_details += f"  - Khuyến mãi {code.strip()}: -{amount:,} VNĐ\n"
         except Exception as e:
-            return f"❌ Lỗi định dạng giảm giá truyền vào ({discounts}). AI gọi theo format mã:số_tiền."
+            return f"❌ Lỗi định dạng giảm giá truyền vào ({discounts}). Vui lòng kiểm tra lại. Lỗi: {e}"
             
     loc_lower = location.lower()
     if any(x in loc_lower for x in ['hà nội', 'hn', 'hcm', 'hồ chí minh', 'sg']):
@@ -135,7 +152,7 @@ def calculate_rolling_price(base_price: int, discounts: str, location: str) -> s
     ans = " BẢNG DỰ TOÁN GIÁ LĂN BÁNH VÀ CHI PHÍ (Tham khảo):\n"
     ans += f" ├─ Giá bán xe: {base_price:,} VNĐ\n"
     if total_disc:
-        ans += f" ├─ Các khoản trừ trực tiếp khuyến mãi:\n{disc_details}"
+        ans += f" ├─ Các khoản trừ trực tiếp khuyến mãi (Tổng: -{total_disc:,} VNĐ):\n{disc_details}"
     ans += f" ├─ Lệ phí trước bạ (Ưu đãi xe điện 0%): {registration_fee} VNĐ\n"
     ans += f" ├─ Phí cấp biển số ({location}): {plate_fee:,} VNĐ\n"
     ans += f" ├─ Chi phí khác (Đăng kiểm, đường bộ, BH TNDS): {other_fees:,} VNĐ\n"
