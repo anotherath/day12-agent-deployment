@@ -1,5 +1,5 @@
 # ============================================================
-# Production Dockerfile — Multi-stage, < 500 MB, non-root
+# Production Dockerfile — < 500 MB, non-root
 # ============================================================
 
 FROM python:3.11-slim
@@ -15,7 +15,7 @@ WORKDIR /app
 
 # Copy requirements first (cache layer)
 COPY requirements.txt .
-RUN pip install --no-cache-dir --user -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application
 COPY app/ ./app/
@@ -29,7 +29,6 @@ RUN chown -R app:app /app
 
 USER app
 
-ENV PATH=/home/app/.local/bin:$PATH
 ENV PYTHONPATH=/app
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
