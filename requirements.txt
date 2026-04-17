@@ -8,3 +8,4 @@ typing-extensions
 fastapi
 uvicorn
 pydantic
+redis

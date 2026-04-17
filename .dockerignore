@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+.env
+.env.*
+!.env.example
+venv/
+.venv/
+.git/
+*.md
+!README.md
+!Sale.md
+!vinhomes_promotion.md
+!system_prompt.txt
+tests/
+.DS_Store
