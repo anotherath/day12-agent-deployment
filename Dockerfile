@@ -51,4 +51,7 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=15s --retries=3 \
     "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')" \
     || exit 1
 
-CMD uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}
+# Install uvicorn globally for the app user
+RUN pip install --user uvicorn
+
+CMD uvicorn app.main:app --host 0.0.0.0 --port 8000
