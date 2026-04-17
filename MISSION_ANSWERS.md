@@ -83,6 +83,36 @@ railway domain
 - **Sai key**: Trả về HTTP 401 Unauthorized
 - **Rotate key**: Đổi giá trị `AGENT_API_KEY` env var, restart container
 
+### Exercise 4.2: JWT authentication (Advanced)
+
+**JWT Flow:**
+1. Client gửi username/password → Server trả về JWT token
+2. Client gửi token trong header `Authorization: Bearer <token>`
+3. Server verify token bằng secret key
+
+**Lấy token:**
+```bash
+curl http://localhost:8000/token -X POST \
+  -H "Content-Type: application/json" \
+  -d '{"username": "admin", "password": "secret"}'
+```
+
+**Dùng token:**
+```bash
+curl http://localhost:8000/ask -X POST \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"question": "Explain JWT"}'
+```
+
+**So sánh API Key vs JWT:**
+| | API Key | JWT |
+|--|---------|-----|
+| Đơn giản | ✅ Đơn giản | Phức tạp hơn |
+| State | Stateless | Self-contained |
+| Expiration | Không có | Có expiration |
+| Use case | Service-to-service | User authentication |
+
 ### Exercise 4.3: Rate limiting
 
 - **Algorithm**: Sliding window — theo dõi timestamps trong 60 giây qua

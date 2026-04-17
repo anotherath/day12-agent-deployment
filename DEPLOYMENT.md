@@ -1,7 +1,7 @@
 # Deployment Information
 
 ## Public URL
-*(Sẽ cập nhật sau khi deploy lên Render)*
+https://day12-agent-deployment-production-9137.up.railway.app
 
 ## Platform
 Railway (via CLI)
@@ -33,17 +33,20 @@ railway domain
 
 ### Health Check
 ```bash
-curl https://your-app.railway.app/health
+curl https://day12-agent-deployment-production-9137.up.railway.app/health
 # Expected: {"status": "ok"}
 ```
 
 ### API Test (with authentication)
 ```bash
-curl -X POST https://your-app.railway.app/chat \
+curl -X POST https://day12-agent-deployment-production-9137.up.railway.app/chat \
   -H "X-API-Key: YOUR_KEY" \
   -H "Content-Type: application/json" \
   -d '{"message": "Cho tôi biết giá VF 5", "session_id": "test"}'
 ```
+
+### Swagger UI
+https://day12-agent-deployment-production-9137.up.railway.app/docs
 
 ## Environment Variables Set
 - `PORT`

@@ -12,7 +12,7 @@ AI Assistant tư vấn xe ô tô điện VinFast, built với LangGraph + FastAP
 - 🛑 **Graceful Shutdown** — Xử lý SIGTERM
 - 📊 **Structured JSON Logging**
 - 🐳 **Docker Multi-stage Build** — Image < 500MB
-- ☁️ **Render Deploy Ready** — `render.yaml` included
+- ☁️ **Railway Deploy Ready** — `railway.toml` included
 
 ## Project Structure
 
@@ -32,7 +32,7 @@ lab6_vinfast_agent/
 ├── vinhomes_promotion.md    # Vinhomes promotions
 ├── Dockerfile               # Multi-stage build
 ├── docker-compose.yml       # Local stack
-├── render.yaml              # Render Blueprint
+├── railway.toml             # Railway deploy config
 ├── requirements.txt         # Dependencies
 ├── .env.example             # Env template
 ├── .dockerignore            # Docker ignore
@@ -143,4 +143,4 @@ railway domain
 - [x] Readiness check endpoint
 - [x] Graceful shutdown
 - [x] Structured JSON logging
-- [x] Render deploy ready
+- [x] Railway deploy ready
