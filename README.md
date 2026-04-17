@@ -72,25 +72,40 @@ curl -X POST http://localhost:8000/chat \
   -d '{"message": "Cho tôi biết giá VF 5", "session_id": "test-session"}'
 ```
 
-## Deploy to Render
+## Deploy to Railway
 
-### Option 1: Blueprint (Recommended)
+### Bước 1: Cài Railway CLI
+```bash
+npm i -g @railway/cli
+```
 
-1. Push code to GitHub
-2. Go to [render.com](https://render.com) → New → Blueprint
-3. Connect your GitHub repo
-4. Render reads `render.yaml` and deploys automatically
-5. Set `OPENAI_API_KEY` in Render Dashboard → Environment
-6. Get your public URL!
+### Bước 2: Login
+```bash
+railway login
+```
 
-### Option 2: Manual
+### Bước 3: Init project
+```bash
+cd lab6_vinfast_agent
+railway init
+```
 
-1. New Web Service → Build from Dockerfile
-2. Set environment variables:
-   - `ENVIRONMENT=production`
-   - `AGENT_API_KEY=your-secret-key`
-   - `OPENAI_API_KEY=sk-...`
-3. Deploy
+### Bước 4: Set environment variables
+```bash
+railway variables set OPENAI_API_KEY=sk-your-key
+railway variables set AGENT_API_KEY=your-secret-key
+railway variables set ENVIRONMENT=production
+```
+
+### Bước 5: Deploy
+```bash
+railway up
+```
+
+### Bước 6: Lấy public URL
+```bash
+railway domain
+```
 
 ## API Endpoints
 
